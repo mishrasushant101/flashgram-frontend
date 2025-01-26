@@ -1,11 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FlipWordsDemo } from "./Flipwords";
 import { Navbar } from "./Navbar";
 import { FileUploadDemo } from "./Upload";
 import { InfiniteMovingCardsDemo } from "./Infinitemovingcards";
 import { Footer } from "./Footer";
+import RotatingCardsLoader from "./Loader";
 
 export function GridBackgroundDemo() {
+    const [isLoading, setIsLoading] = useState(false);
+    const [pageLoading, setPageLoading] = useState(true);
+
+    useEffect(() => {
+        // Simulate initial page load
+        setTimeout(() => {
+            setPageLoading(false);
+        }, 2000); // Show loader for 2 seconds
+    }, []);
+
+    if (pageLoading) {
+        return (
+            <div className="h-screen w-full flex items-center justify-center dark:bg-black bg-black">
+                <RotatingCardsLoader />
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen">
             <div className="bg-black">
@@ -44,9 +63,13 @@ export function GridBackgroundDemo() {
                         </button>
                     </div>
 
-                    {/* File upload section - reduced mt-12 to mt-8 */}
+                    {/* File upload section with loader */}
                     <div className="w-full max-w-2xl mt-8">
-                        <FileUploadDemo />
+                        {isLoading ? (
+                            <RotatingCardsLoader />
+                        ) : (
+                            <FileUploadDemo setIsLoading={setIsLoading} />
+                        )}
                     </div>
                     <div className="">
                       <InfiniteMovingCardsDemo /> 

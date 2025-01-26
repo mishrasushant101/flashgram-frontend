@@ -29,11 +29,26 @@ const innerBorderVariant = {
   },
 };
 
-export function FileUploadDemo() {
+interface FileUploadDemoProps {
+  setIsLoading: (loading: boolean) => void;
+}
+
+export function FileUploadDemo({ setIsLoading }: FileUploadDemoProps) {
   const [files, setFiles] = useState<File[]>([]);
   const handleFileUpload = (files: File[]) => {
     setFiles(files);
     console.log(files);
+  };
+
+  const handleUpload = async (file: File) => {
+    setIsLoading(true);
+    try {
+      // Your existing upload logic
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
